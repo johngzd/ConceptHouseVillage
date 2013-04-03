@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Data invoer!</title>
+		<script src="js/jquery.js"></script>
+		<script src="http://127.0.0.1:80/socket.io/socket.io.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('#chatBox').submit(function(event) {
+					event.preventDefault();
+					
+					var textInput = $("input[name=text]").val();
+					
+					var socket = io.connect('http://127.0.0.1:80/');
+				  	
+				  	socket.on('news', function (data) {
+						socket.broadcast.emit(textInput);
+					});
+				  	
+				  	$("input[name=text]").val('');
+				  	
+				  	console.log(textInput);
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<h1>Schrijven</h1>
+		
+		<form id="chatBox">
+			<input type="text" name="text" />
+			<input type="submit" name="send" value="Send" />
+		</form>
+		
+		<a href="lezen.html">>> input lezen</a>
+	</body>
+</html>
